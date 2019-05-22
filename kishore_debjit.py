@@ -1,28 +1,20 @@
-def knapsack_function(val,wt,cap):
-    index=list(range(len(val)))
-    ratio = [v/w for v,w in zip(val,wt)]
-    index.sort(key=lambda i: ratio[i], reverse=True) 
-    max_value=0
-    fract=[0]*len(val)
-    for i in index:
-        if wt[i]<=cap:
-            fract[i]=1
-            max_value +=wt[i]
-        else:
-            fract[i]=cap/wt[i]
-            max_value += val[i]*cap/wt[i]
-            break
-    return max_value,fract
+def ksp(W,wt,val,n):
+    if(n==0 or W==0):
+      f[0]=0
+      return 0
+    if(wt[n-1]>W):
+        f[n-1]=0
+        return ksp(W,wt,val,n-1)
+    else:
+        f[n-1]=1
+        return max(val[n-1]+ksp(W-wt[n-1],wt,val,n-1),ksp(W,wt,val,n-1))
 
 n=int(input('enter no. of elements'))
-val=input('enter the values of the elements in order: '
-          .format(n)).split()
-val=[int(v) for v in val]
-wt=input('enter the weights of elements in order:'
-         .format(n)).split()
-wt=[int(w) for w in wt]
-cap=int(input('enter max weight: ' ))
-max_value, fract = knapsack_function(val,wt,cap)
-print('max value of elements=', max_value)
-print('fractions of elemnts taken=', fract)
+val=list(map(int,input('enter the values of the elements in order: ').split()))
+wt=list(map(int,input('enter the weights of the elements in order: ').split()))
+W=int(input('enter max weight: ' ))
+f=list(map(int,input('enter n-zeroes where n is the no. of items: ').split()))
+print('max value of elements=', ksp(W,wt,val,n))
+print('fraction',"\n")
+print(*f, sep=" , ")
     
