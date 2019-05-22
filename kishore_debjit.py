@@ -17,4 +17,5 @@ f=list(map(int,input('enter n-zeroes where n is the no. of items: ').split()))
 print('max value of elements=', ksp(W,wt,val,n))
 print('fraction',"\n")
 print(*f, sep=" , ")
+
     
